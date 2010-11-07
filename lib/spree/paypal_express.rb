@@ -70,7 +70,7 @@ module Spree::PaypalExpress
                                          # phone is currently blanked in AM's PPX response lib
                                          :phone      => @ppx_details.params["phone"] || "(not given)"
 
-        if (state = State.find_by_abbr(ship_address["state"]))
+        if (state = State.find_by_abbr(ship_address["state"].upcase))
           order_ship_address.state = state
         else
           order_ship_address.state_name = ship_address["state"]
@@ -154,7 +154,7 @@ module Spree::PaypalExpress
     
     payment_method = PaymentMethod.find(params[:checkout][:payments_attributes].first[:payment_method_id])
     
-    if payment_method.kind_of?(BillingIntegration::PaypalExpress) || payment_method.kind_of?(BillingIntegration::PaypalExpressUk)
+    if payment_method.kind_of?(BillingIntegration::PaypalExpress) || payment_method.kind_of?(BillingIntegration::PaypalExpressUk || payment_method.kind_of?(BillingIntegration::PaypalExpressAu))
       redirect_to paypal_payment_order_checkout_url(@checkout.order, :payment_method_id => payment_method)
     end
   end
