@@ -90,7 +90,8 @@ module ActiveMerchant #:nodoc:
               ## add flat rates for shipping
               # add_shipping_options(xml, options[:shipping_options], options) if options[:shipping_options]
               xml.tag! 'n2:AllowNote', options[:allow_note] ? '1' : '0'
-              xml.tag! 'n2:AddressOverride', options[:address_override] ? '1' : '0' # force yours
+              #xml.tag! 'n2:AddressOverride', options[:address_override] ? '1' : '0' # force yours
+              xml.tag! 'n2:AddressOverride', '0' # force yours
               xml.tag! 'n2:LocaleCode', options[:locale] unless options[:locale].blank?
 
               # Customization of the payment page
